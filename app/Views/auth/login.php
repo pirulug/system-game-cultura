@@ -35,12 +35,6 @@
                 <span class="text-muted small">¿Aún no tienes cuenta?</span>
                 <a href="<?= htmlspecialchars($baseUrl) ?>/register" class="text-warning fw-bold small text-decoration-none ms-1">Regístrate aquí</a>
             </div>
-
-            <div class="mt-4 p-3 rounded bg-dark border border-secondary small text-muted">
-                <div class="fw-bold text-white mb-1"><i class="bi bi-info-circle me-1"></i> Cuentas de Demostración:</div>
-                <div><strong>Admin:</strong> admin / Admin123*</div>
-                <div><strong>Jugador:</strong> chasqui_veloz / Jugador123*</div>
-            </div>
         </div>
     </div>
 </div>

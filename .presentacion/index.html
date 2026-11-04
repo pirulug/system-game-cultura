@@ -402,6 +402,137 @@
             justify-content: center;
         }
 
+        /* Componente QR Code interactivo */
+        .qr-card {
+            display: flex;
+            align-items: center;
+            gap: 1.15rem;
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border-strong);
+            padding: 0.85rem 1.15rem;
+            position: relative;
+        }
+
+        .qr-card.highlight {
+            border-color: var(--primary-border);
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.08) 0%, rgba(6, 9, 17, 0.95) 100%);
+        }
+
+        .qr-frame {
+            background-color: #ffffff;
+            padding: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+        }
+
+        .qr-frame img {
+            display: block;
+            width: 82px;
+            height: 82px;
+            image-rendering: pixelated;
+        }
+
+        .qr-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .qr-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            background-color: var(--primary-subtle);
+            border: 1px solid var(--primary-border);
+            padding: 0.15rem 0.45rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .qr-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.2rem;
+        }
+
+        .qr-url {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            word-break: break-all;
+            display: block;
+            margin-bottom: 0.25rem;
+            text-decoration: none;
+        }
+
+        .qr-url:hover {
+            text-decoration: underline;
+        }
+
+        .qr-desc {
+            font-size: 0.74rem;
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* Fila de QR para cierre en Diapositiva 10 */
+        .qr-ecosystem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .qr-ecosystem-item {
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border-subtle);
+            padding: 0.75rem 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .qr-ecosystem-item:hover {
+            border-color: var(--primary);
+        }
+
+        .qr-ecosystem-item .qr-frame img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .qr-ecosystem-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .qr-ecosystem-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .qr-ecosystem-url {
+            font-family: monospace;
+            font-size: 0.72rem;
+            color: var(--primary);
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         /* Barra de navegacion inferior */
         .controls-bar {
             background-color: var(--bg-deep);
@@ -747,22 +878,35 @@
                                 <div class="window-dot red"></div>
                                 <div class="window-dot cyan"></div>
                                 <div class="window-dot green"></div>
-                                <div class="window-address">localhost/coquie &bull; videojuego web</div>
+                                <div class="window-address">https://cookie.pirulug.com</div>
                             </div>
                             <div class="window-body">
-                                <div style="text-align: center; padding: 1.5rem 0;">
-                                    <div style="display: inline-block; padding: 1.5rem; border: 2px dashed var(--primary); margin-bottom: 1rem;">
-                                        <div style="font-size: 2rem; font-weight: 900; color: #ffffff;">1,450,820</div>
-                                        <div style="font-size: 0.8rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Galletas Producidas</div>
-                                    </div>
-                                    <div class="grid-2" style="gap: 0.75rem; text-align: left; margin-top: 1rem;">
-                                        <div class="card-tech" style="padding: 0.75rem;">
-                                            <div style="font-size: 0.75rem; color: var(--text-muted);">Automatización</div>
-                                            <div style="font-weight: 700; color: #ffffff;">+250 /segundo</div>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <div style="display: flex; gap: 0.75rem; align-items: stretch;">
+                                        <div style="flex: 1; text-align: center; padding: 0.85rem 0.5rem; border: 1px dashed var(--primary); background-color: var(--primary-subtle); display: flex; flex-direction: column; justify-content: center;">
+                                            <div style="font-size: 1.85rem; font-weight: 900; color: #ffffff; letter-spacing: -0.02em;">1,450,820</div>
+                                            <div style="font-size: 0.72rem; color: var(--primary); font-weight: 800; text-transform: uppercase;">Galletas Producidas</div>
                                         </div>
-                                        <div class="card-tech" style="padding: 0.75rem;">
-                                            <div style="font-size: 0.75rem; color: var(--text-muted);">Multiplicador</div>
-                                            <div style="font-weight: 700; color: var(--accent-cyan);">Nivel 14 (x3.5)</div>
+                                        <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
+                                            <div class="card-tech" style="padding: 0.55rem 0.75rem;">
+                                                <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase;">Producción Pasiva</div>
+                                                <div style="font-weight: 800; color: #ffffff; font-size: 0.9rem;">+250 /segundo</div>
+                                            </div>
+                                            <div class="card-tech" style="padding: 0.55rem 0.75rem;">
+                                                <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase;">Multiplicador</div>
+                                                <div style="font-weight: 800; color: var(--accent-cyan); font-size: 0.9rem;">Nivel 14 (x3.5)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="qr-card highlight">
+                                        <div class="qr-frame">
+                                            <img src="qr-cookie.pirulug.com.png" alt="QR Cookie Clicker Demo">
+                                        </div>
+                                        <div class="qr-content">
+                                            <span class="qr-badge">Demo en Línea</span>
+                                            <div class="qr-title">Jugar Cookie Clicker</div>
+                                            <a href="https://cookie.pirulug.com/" target="_blank" class="qr-url">https://cookie.pirulug.com</a>
+                                            <div class="qr-desc">Escanea con tu celular para probar el juego web, mecánicas incrementales y persistencia en MySQL.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -814,20 +958,30 @@
                                 <div class="window-dot red"></div>
                                 <div class="window-dot cyan"></div>
                                 <div class="window-dot green"></div>
-                                <div class="window-address">localhost/pre &bull; arena 1 vs 1</div>
+                                <div class="window-address">https://cultura.pirulug.com</div>
                             </div>
                             <div class="window-body">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.4rem;">
                                     <span class="tech-pill primary">Ronda 4 de 10 &bull; Historia</span>
-                                    <span style="font-family: monospace; font-size: 1.25rem; font-weight: 800; color: var(--primary);">00:08s</span>
+                                    <span style="font-family: monospace; font-size: 1.15rem; font-weight: 800; color: var(--primary);">00:08s</span>
                                 </div>
-                                <div style="font-size: 1rem; font-weight: 700; color: #ffffff; margin-bottom: 1rem;">
+                                <div style="font-size: 0.92rem; font-weight: 700; color: #ffffff; margin-bottom: 0.65rem; line-height: 1.35;">
                                     ¿En qué batalla se selló la independencia del Perú y América del Sur en 1824?
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <div class="card-tech" style="padding: 0.65rem 1rem; border-color: var(--accent-green); color: var(--accent-green); font-weight: 700;">A. Batalla de Ayacucho (Correcta)</div>
-                                    <div class="card-tech" style="padding: 0.65rem 1rem;">B. Batalla de Junín</div>
-                                    <div class="card-tech" style="padding: 0.65rem 1rem;">C. Combate de Angamos</div>
+                                <div style="display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.85rem;">
+                                    <div class="card-tech" style="padding: 0.45rem 0.85rem; border-color: var(--accent-green); color: var(--accent-green); font-weight: 700; font-size: 0.82rem;">A. Batalla de Ayacucho (Correcta)</div>
+                                    <div class="card-tech" style="padding: 0.45rem 0.85rem; font-size: 0.82rem;">B. Batalla de Junín</div>
+                                </div>
+                                <div class="qr-card highlight">
+                                    <div class="qr-frame">
+                                        <img src="qr-cultura.pirulug.com.png" alt="QR VS Cultura General">
+                                    </div>
+                                    <div class="qr-content">
+                                        <span class="qr-badge">Arena Multijugador</span>
+                                        <div class="qr-title">Unirse a Partida 1 vs 1</div>
+                                        <a href="https://cultura.pirulug.com/" target="_blank" class="qr-url">https://cultura.pirulug.com</a>
+                                        <div class="qr-desc">Escanea el código QR para ingresar a la plataforma y competir en salas multijugador en tiempo real.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1073,25 +1227,33 @@
                                 <div class="window-dot green"></div>
                                 <div class="window-address">https://pirulug.com</div>
                             </div>
-                            <div class="window-body" style="background: radial-gradient(circle at top right, rgba(255, 0, 85, 0.15) 0%, rgba(6, 9, 17, 0.95) 70%);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                                    <div style="font-weight: 800; font-size: 1.1rem; color: #ffffff;">PIRULUG<span>.COM</span></div>
-                                    <div style="display: flex; gap: 0.75rem; font-size: 0.75rem; color: var(--text-muted);">
+                            <div class="window-body" style="background: radial-gradient(circle at top right, rgba(255, 0, 85, 0.12) 0%, rgba(6, 9, 17, 0.95) 70%);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 0.85rem;">
+                                    <div style="font-weight: 800; font-size: 1.05rem; color: #ffffff;">PIRULUG<span>.COM</span></div>
+                                    <div style="display: flex; gap: 0.75rem; font-size: 0.72rem; color: var(--text-muted);">
                                         <span>Servicios</span>
                                         <span>Proyectos</span>
                                         <span>Nosotros</span>
-                                        <span style="color: var(--primary);">Contacto</span>
+                                        <span style="color: var(--primary); font-weight: 700;">Contacto</span>
                                     </div>
                                 </div>
-                                <div style="text-align: center; padding: 1.5rem 0;">
-                                    <div style="font-size: 1.5rem; font-weight: 900; color: #ffffff; line-height: 1.2; margin-bottom: 0.5rem;">
+                                <div style="margin-bottom: 0.85rem; text-align: left;">
+                                    <div style="font-size: 1.15rem; font-weight: 800; color: #ffffff; line-height: 1.25; margin-bottom: 0.35rem;">
                                         Soluciones Digitales que Impulsan tu Negocio
                                     </div>
-                                    <p style="font-size: 0.8rem; color: var(--text-secondary); max-width: 380px; margin: 0 auto 1rem auto;">
-                                        Software a medida, facturación electrónica SUNAT y aplicaciones móviles con respaldo técnico integral.
+                                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4;">
+                                        Desarrollo de software a medida, facturación electrónica homologada SUNAT y plataformas web con respaldo técnico integral.
                                     </p>
-                                    <div style="display: inline-block; background-color: var(--primary); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.45rem 1rem;">
-                                        EXPLORAR CATÁLOGO DE SERVICIOS
+                                </div>
+                                <div class="qr-card highlight">
+                                    <div class="qr-frame">
+                                        <img src="qr-pirulug.com.png" alt="QR Sitio Web PIRULUG.COM">
+                                    </div>
+                                    <div class="qr-content">
+                                        <span class="qr-badge">Portal Oficial</span>
+                                        <div class="qr-title">Sitio Web PIRULUG S.A.C.</div>
+                                        <a href="https://pirulug.com/" target="_blank" class="qr-url">https://pirulug.com</a>
+                                        <div class="qr-desc">Escanea con tu teléfono para acceder a los servicios, portafolio empresarial y canales oficiales de PIRULUG.</div>
                                     </div>
                                 </div>
                             </div>
@@ -1161,38 +1323,63 @@
                     <div class="slide-num">10</div>
                 </div>
                 <div class="slide-body">
-                    <div class="grid-2" style="margin-bottom: 2rem;">
-                        <div class="card-tech">
-                            <h3 class="card-title">Formación Académica con Impacto Real</h3>
-                            <p class="card-text mb-3">
-                                Los conocimientos adquiridos en la carrera de Computación e Informática del IESTP Santiago Antúnez de Mayolo proporcionaron los cimientos técnicos para desarrollar soluciones completas, desde videojuegos interactivos hasta software tributario de misión crítica.
-                            </p>
-                            <p class="card-text">
-                                Cada proyecto desarrollado superó la etapa experimental para convertirse en una aplicación funcional conectada a bases de datos y respaldada por arquitectura formal.
+                    <div class="grid-2" style="margin-bottom: 1rem;">
+                        <div class="card-tech" style="padding: 1rem 1.25rem;">
+                            <h3 class="card-title" style="font-size: 1rem; margin-bottom: 0.35rem;">Formación Académica con Impacto Real</h3>
+                            <p class="card-text" style="font-size: 0.85rem;">
+                                Los conocimientos adquiridos en el IESTP Santiago Antúnez de Mayolo proporcionaron los cimientos técnicos para desarrollar soluciones completas, interactivas y escalables.
                             </p>
                         </div>
-                        <div class="card-tech">
-                            <h3 class="card-title">Consolidación Empresarial Sostenible</h3>
-                            <p class="card-text mb-3">
-                                La creación de PIRULUG S.A.C. y el lanzamiento del portal pirulug.com demuestran que la informática no solo resuelve requerimientos técnicos, sino que genera unidades de negocio productivas y genera empleo en el sector tecnológico.
-                            </p>
-                            <p class="card-text">
-                                La visión a futuro contempla seguir expandiendo las soluciones empresariales y plataformas en la nube a nivel nacional.
+                        <div class="card-tech" style="padding: 1rem 1.25rem;">
+                            <h3 class="card-title" style="font-size: 1rem; margin-bottom: 0.35rem;">Consolidación Empresarial Sostenible</h3>
+                            <p class="card-text" style="font-size: 0.85rem;">
+                                La constitución de PIRULUG S.A.C. y el lanzamiento de plataformas en línea demuestran cómo transformar habilidades de programación en una empresa formal.
                             </p>
                         </div>
                     </div>
 
                     <!-- Frase Final Destacada -->
-                    <div style="background-color: var(--bg-deep); border: 1px solid var(--primary-border); padding: 1.75rem 2.5rem; text-align: center; position: relative;">
-                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem;">
+                    <div style="background-color: var(--bg-deep); border: 1px solid var(--primary-border); padding: 1rem 1.75rem; text-align: center; position: relative;">
+                        <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--primary); font-weight: 800; margin-bottom: 0.25rem;">
                             Mensaje de Cierre
                         </div>
-                        <div style="font-size: 1.65rem; font-weight: 900; color: #ffffff; letter-spacing: -0.02em;">
+                        <div style="font-size: 1.45rem; font-weight: 900; color: #ffffff; letter-spacing: -0.02em;">
                             "De aprender a programar a crear soluciones tecnológicas y construir mi propia empresa."
                         </div>
-                        <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
                             PIRULUG S.A.C. &bull; IESTP Santiago Antúnez de Mayolo &bull; Computación e Informática
                         </div>
+                    </div>
+
+                    <!-- Enlaces QR del Ecosistema de Proyectos -->
+                    <div class="qr-ecosystem-grid">
+                        <a href="https://cookie.pirulug.com/" target="_blank" class="qr-ecosystem-item" style="text-decoration: none;">
+                            <div class="qr-frame">
+                                <img src="qr-cookie.pirulug.com.png" alt="QR Cookie Clicker">
+                            </div>
+                            <div class="qr-ecosystem-info">
+                                <div class="qr-ecosystem-title">Cookie Clicker</div>
+                                <span class="qr-ecosystem-url">cookie.pirulug.com</span>
+                            </div>
+                        </a>
+                        <a href="https://cultura.pirulug.com/" target="_blank" class="qr-ecosystem-item" style="text-decoration: none;">
+                            <div class="qr-frame">
+                                <img src="qr-cultura.pirulug.com.png" alt="QR VS Cultura General">
+                            </div>
+                            <div class="qr-ecosystem-info">
+                                <div class="qr-ecosystem-title">VS Cultura General</div>
+                                <span class="qr-ecosystem-url">cultura.pirulug.com</span>
+                            </div>
+                        </a>
+                        <a href="https://pirulug.com/" target="_blank" class="qr-ecosystem-item" style="text-decoration: none;">
+                            <div class="qr-frame">
+                                <img src="qr-pirulug.com.png" alt="QR PIRULUG.COM">
+                            </div>
+                            <div class="qr-ecosystem-info">
+                                <div class="qr-ecosystem-title">PIRULUG S.A.C.</div>
+                                <span class="qr-ecosystem-url">pirulug.com</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </section>
