@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Profesional - Computación e Informática | PIRULUG</title>
+    <style>
+        :root {
+            --primary: #ff0055;
+            --primary-hover: #e0004c;
+            --primary-subtle: rgba(255, 0, 85, 0.12);
+            --primary-border: rgba(255, 0, 85, 0.35);
+
+            --bg-deep: #060911;
+            --bg-card: #0d1322;
+            --bg-card-hover: #131c30;
+            --bg-elevated: #162035;
+
+            --border-subtle: #192338;
+            --border-strong: #253450;
+
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            --accent-cyan: #00e5ff;
+            --accent-cyan-subtle: rgba(0, 229, 255, 0.12);
+            --accent-cyan-border: rgba(0, 229, 255, 0.3);
+
+            --accent-green: #10b981;
+            --accent-green-subtle: rgba(16, 185, 129, 0.12);
+            --accent-green-border: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Regla estricta: border-radius maximo 2px */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            border-radius: 2px !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+        }
+
+        /* Contenedor Widescreen 16:9 de Presentacion */
+        .presentation-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .slide-deck {
+            width: 100%;
+            max-width: 1380px;
+            aspect-ratio: 16 / 9;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Diapositivas individuales */
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 3.5rem 4.5rem;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(30px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            background: linear-gradient(135deg, rgba(13, 19, 34, 0.98) 0%, rgba(6, 9, 17, 0.99) 100%);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        /* Encabezado estandar de Diapositiva */
+        .slide-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            position: relative;
+        }
+
+        .slide-header::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .slide-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slide-tag::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+        }
+
+        .slide-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .slide-num {
+            font-family: monospace;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--border-strong);
+        }
+
+        /* Contenido de Diapositiva */
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Componentes de Grilla */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+
+        /* Tarjetas de Contenido */
+        .card-tech {
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border-subtle);
+            padding: 1.5rem;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+            position: relative;
+        }
+
+        .card-tech:hover {
+            border-color: var(--border-strong);
+            background-color: var(--bg-card-hover);
+        }
+
+        .card-tech.highlight {
+            border-color: var(--primary-border);
+            background: linear-gradient(180deg, var(--primary-subtle) 0%, var(--bg-deep) 100%);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-elevated);
+            border: 1px solid var(--border-strong);
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Etiquetas de tecnologias (Badges) */
+        .tech-pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-pill {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.65rem;
+            background-color: var(--bg-elevated);
+            border: 1px solid var(--border-strong);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tech-pill.primary {
+            background-color: var(--primary-subtle);
+            border-color: var(--primary-border);
+            color: var(--primary);
+        }
+
+        .tech-pill.cyan {
+            background-color: var(--accent-cyan-subtle);
+            border-color: var(--accent-cyan-border);
+            color: var(--accent-cyan);
+        }
+
+        .tech-pill.green {
+            background-color: var(--accent-green-subtle);
+            border-color: var(--accent-green-border);
+            color: var(--accent-green);
+        }
+
+        /* Listas de caracteristicas tecnicas */
+        .tech-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .tech-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .tech-list-item strong {
+            color: #ffffff;
+        }
+
+        .tech-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Estilos especificos para Diapositiva 1: Portada */
+        .hero-portada {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-badge {
+            align-self: flex-start;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--primary);
+            background-color: var(--primary-subtle);
+            border: 1px solid var(--primary-border);
+            padding: 0.4rem 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            line-height: 1.5;
+            margin-bottom: 3rem;
+        }
+
+        .hero-meta-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 2rem;
+        }
+
+        .hero-meta-item .meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .hero-meta-item .meta-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* Estilo Mockup de Navegador o Pantalla */
+        .window-mockup {
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border-strong);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .window-header {
+            background-color: #0b0f1a;
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.65rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .window-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--border-strong);
+        }
+
+        .window-dot.red { background-color: var(--primary); }
+        .window-dot.cyan { background-color: var(--accent-cyan); }
+        .window-dot.green { background-color: var(--accent-green); }
+
+        .window-address {
+            flex: 1;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 0.25rem 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .window-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Barra de navegacion inferior */
+        .controls-bar {
+            background-color: var(--bg-deep);
+            border-top: 1px solid var(--border-subtle);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .ctrl-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .brand-badge {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .brand-badge span {
+            color: var(--primary);
+        }
+
+        .timer-display {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .timer-display strong {
+            color: var(--primary);
+        }
+
+        .ctrl-center {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-nav {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            color: var(--text-main);
+            padding: 0.5rem 1.1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.15s ease;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-family: monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: 0 0.5rem;
+        }
+
+        .slide-counter span {
+            color: var(--primary);
+        }
+
+        .ctrl-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            color: var(--text-muted);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.15s ease;
+        }
+
+        .btn-icon:hover {
+            color: #ffffff;
+            border-color: var(--text-muted);
+        }
+
+        /* Barra de progreso de la presentacion */
+        .progress-bar-container {
+            width: 100%;
+            height: 3px;
+            background-color: var(--border-subtle);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 10%;
+            transition: width 0.3s ease;
+        }
+
+        /* Modal de Vision General / Indice */
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(6, 9, 17, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 99;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .drawer-overlay.active {
+            display: flex;
+        }
+
+        .drawer-modal {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            width: 100%;
+            max-width: 900px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 1rem;
+        }
+
+        .drawer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .drawer-item {
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border-subtle);
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .drawer-item:hover, .drawer-item.active {
+            border-color: var(--primary);
+            background-color: var(--primary-subtle);
+        }
+
+        .drawer-item-num {
+            font-family: monospace;
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .drawer-item-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor Principal de Diapositivas -->
+    <main class="presentation-wrapper">
+        <div class="slide-deck" id="slideDeck">
+
+            <!-- DIAPOSITIVA 1: PORTADA -->
+            <section class="slide active" data-index="1">
+                <div class="hero-portada">
+                    <div class="hero-badge">Presentación Académica y Profesional</div>
+                    <h1 class="hero-title">
+                        Mis proyectos tecnológicos y experiencia en <span>Computación e Informática</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Portafolio de desarrollo de software, videojuegos web, sistemas de facturación electrónica SUNAT, aplicaciones móviles y la iniciativa empresarial PIRULUG S.A.C.
+                    </p>
+                    <div class="hero-meta-bar">
+                        <div class="hero-meta-item">
+                            <div class="meta-label">Estudiante / Expositor</div>
+                            <div class="meta-value">PIRULUG Developer</div>
+                        </div>
+                        <div class="hero-meta-item">
+                            <div class="meta-label">Institución Educativa</div>
+                            <div class="meta-value">IESTP Santiago Antúnez de Mayolo</div>
+                        </div>
+                        <div class="hero-meta-item">
+                            <div class="meta-label">Carrera Profesional</div>
+                            <div class="meta-value">Computación e Informática</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 2: INTRODUCCIÓN -->
+            <section class="slide" data-index="2">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Visión General</div>
+                        <h2 class="slide-title">Formación Técnica y Áreas de Especialización</h2>
+                    </div>
+                    <div class="slide-num">02</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-3">
+                        <div class="card-tech">
+                            <div class="card-icon">01</div>
+                            <h3 class="card-title">Programación y Algoritmos</h3>
+                            <p class="card-text">Dominio de lógica estructurada, programación orientada a objetos (POO), patrones de diseño e ingeniería de software.</p>
+                            <div class="tech-pill-group">
+                                <span class="tech-pill primary">PHP 8</span>
+                                <span class="tech-pill">Java</span>
+                                <span class="tech-pill">JS ES6</span>
+                            </div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">02</div>
+                            <h3 class="card-title">Desarrollo Web Full-Stack</h3>
+                            <p class="card-text">Arquitectura cliente-servidor, desarrollo backend nativo y con frameworks modernos, consumo de APIs y diseño responsive.</p>
+                            <div class="tech-pill-group">
+                                <span class="tech-pill cyan">Laravel</span>
+                                <span class="tech-pill">Bootstrap</span>
+                                <span class="tech-pill">AJAX</span>
+                            </div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">03</div>
+                            <h3 class="card-title">Bases de Datos Relacionales</h3>
+                            <p class="card-text">Modelado entidad-relación, normalización, integridad referencial, transacciones ACID y optimización de consultas SQL.</p>
+                            <div class="tech-pill-group">
+                                <span class="tech-pill green">MySQL 8</span>
+                                <span class="tech-pill">MariaDB</span>
+                                <span class="tech-pill">PDO</span>
+                            </div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">04</div>
+                            <h3 class="card-title">Aplicaciones Móviles</h3>
+                            <p class="card-text">Diseño de interfaces táctiles, ciclo de vida de actividades e integración móvil con servicios web y bases de datos centralizadas.</p>
+                            <div class="tech-pill-group">
+                                <span class="tech-pill">Android Studio</span>
+                                <span class="tech-pill">APIs REST</span>
+                            </div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">05</div>
+                            <h3 class="card-title">Facturación e Integración</h3>
+                            <p class="card-text">Generación de XML con estándares UBL 2.1, firmado digital de comprobantes y comunicación con los servidores de SUNAT.</p>
+                            <div class="tech-pill-group">
+                                <span class="tech-pill primary">SUNAT</span>
+                                <span class="tech-pill">UBL 2.1</span>
+                            </div>
+                        </div>
+                        <div class="card-tech highlight">
+                            <div class="card-icon">06</div>
+                            <h3 class="card-title">Emprendimiento Tecnológico</h3>
+                            <p class="card-text">Creación y consolidación de la empresa PIRULUG S.A.C., orientada a brindar soluciones informáticas al sector productivo.</p>
+                            <div class="tech-pill-group">
+                                <span class="tech-pill primary">PIRULUG S.A.C.</span>
+                                <span class="tech-pill">Innovación</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 3: COOKIE CLICKER -->
+            <section class="slide" data-index="3">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Proyecto 01 &bull; Videojuegos Web</div>
+                        <h2 class="slide-title">Cookie Clicker: Juego Incremental y Persistente</h2>
+                    </div>
+                    <div class="slide-num">03</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-2">
+                        <div>
+                            <div class="card-tech mb-3">
+                                <h3 class="card-title">Arquitectura y Tecnologías</h3>
+                                <p class="card-text">Videojuego web desarrollado con arquitectura clásica y dinámica sin frameworks pesados, optimizado para alto rendimiento en navegador.</p>
+                                <div class="tech-pill-group">
+                                    <span class="tech-pill primary">PHP Backend</span>
+                                    <span class="tech-pill green">MySQL</span>
+                                    <span class="tech-pill cyan">JavaScript Vanilla</span>
+                                    <span class="tech-pill">HTML5 / CSS3</span>
+                                </div>
+                            </div>
+                            <ul class="tech-list mt-3">
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Mecánica Incremental:</strong> Generación exponencial de puntos mediante clics interactivos y automatización con mejoras.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Persistencia de Progreso:</strong> Guardado en tiempo real en base de datos MySQL para conservar logros y niveles del usuario.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Loop de Juego Fluido:</strong> Algoritmo en JavaScript Vanilla que calcula la producción pasiva por segundo sin congelar la interfaz.</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="window-mockup">
+                            <div class="window-header">
+                                <div class="window-dot red"></div>
+                                <div class="window-dot cyan"></div>
+                                <div class="window-dot green"></div>
+                                <div class="window-address">localhost/coquie &bull; videojuego web</div>
+                            </div>
+                            <div class="window-body">
+                                <div style="text-align: center; padding: 1.5rem 0;">
+                                    <div style="display: inline-block; padding: 1.5rem; border: 2px dashed var(--primary); margin-bottom: 1rem;">
+                                        <div style="font-size: 2rem; font-weight: 900; color: #ffffff;">1,450,820</div>
+                                        <div style="font-size: 0.8rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Galletas Producidas</div>
+                                    </div>
+                                    <div class="grid-2" style="gap: 0.75rem; text-align: left; margin-top: 1rem;">
+                                        <div class="card-tech" style="padding: 0.75rem;">
+                                            <div style="font-size: 0.75rem; color: var(--text-muted);">Automatización</div>
+                                            <div style="font-weight: 700; color: #ffffff;">+250 /segundo</div>
+                                        </div>
+                                        <div class="card-tech" style="padding: 0.75rem;">
+                                            <div style="font-size: 0.75rem; color: var(--text-muted);">Multiplicador</div>
+                                            <div style="font-weight: 700; color: var(--accent-cyan);">Nivel 14 (x3.5)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 4: VS CULTURA GENERAL -->
+            <section class="slide" data-index="4">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Proyecto 02 &bull; Multijugador en Tiempo Real</div>
+                        <h2 class="slide-title">VS Cultura General: Plataforma Competitiva del Perú</h2>
+                    </div>
+                    <div class="slide-num">04</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-2">
+                        <div>
+                            <div class="card-tech mb-3">
+                                <h3 class="card-title">Motor Multijugador Sincronizado</h3>
+                                <p class="card-text">Plataforma web donde los usuarios compiten en tiempo real respondiendo preguntas sobre historia, geografía, gastronomía y patrimonio nacional.</p>
+                                <div class="tech-pill-group">
+                                    <span class="tech-pill primary">PHP 8.5 Nativo (MVC)</span>
+                                    <span class="tech-pill green">MySQL 8 Normalizado</span>
+                                    <span class="tech-pill cyan">Fetch API & Polling</span>
+                                    <span class="tech-pill">Sistema ELO</span>
+                                </div>
+                            </div>
+                            <ul class="tech-list mt-3">
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Duelo 1 vs 1 y Equipos 2 vs 2:</strong> Emparejamiento por nivel de habilidad con marcador conjunto en tiempo real.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Salas Privadas Personalizadas:</strong> Código de acceso único, selección de tiempo, dificultad y 18 categorías peruanas.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Autoridad en Servidor:</strong> Validación estricta anti-trampas, bonificaciones por velocidad de respuesta y cálculo ELO.</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="window-mockup">
+                            <div class="window-header">
+                                <div class="window-dot red"></div>
+                                <div class="window-dot cyan"></div>
+                                <div class="window-dot green"></div>
+                                <div class="window-address">localhost/pre &bull; arena 1 vs 1</div>
+                            </div>
+                            <div class="window-body">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+                                    <span class="tech-pill primary">Ronda 4 de 10 &bull; Historia</span>
+                                    <span style="font-family: monospace; font-size: 1.25rem; font-weight: 800; color: var(--primary);">00:08s</span>
+                                </div>
+                                <div style="font-size: 1rem; font-weight: 700; color: #ffffff; margin-bottom: 1rem;">
+                                    ¿En qué batalla se selló la independencia del Perú y América del Sur en 1824?
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div class="card-tech" style="padding: 0.65rem 1rem; border-color: var(--accent-green); color: var(--accent-green); font-weight: 700;">A. Batalla de Ayacucho (Correcta)</div>
+                                    <div class="card-tech" style="padding: 0.65rem 1rem;">B. Batalla de Junín</div>
+                                    <div class="card-tech" style="padding: 0.65rem 1rem;">C. Combate de Angamos</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 5: FACTURADOR ELECTRÓNICO SUNAT -->
+            <section class="slide" data-index="5">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Proyecto 03 &bull; Software Empresarial</div>
+                        <h2 class="slide-title">Facturador Electrónico Homologado con SUNAT</h2>
+                    </div>
+                    <div class="slide-num">05</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-2">
+                        <div>
+                            <div class="card-tech mb-3">
+                                <h3 class="card-title">Módulo de Facturación y Cumplimiento Tributario</h3>
+                                <p class="card-text">Sistema de emisión, control y almacenamiento de comprobantes de pago electrónicos conforme a las resoluciones de superintendencia de la SUNAT.</p>
+                                <div class="tech-pill-group">
+                                    <span class="tech-pill primary">Laravel Framework</span>
+                                    <span class="tech-pill green">MySQL / MariaDB</span>
+                                    <span class="tech-pill cyan">Web Services SOAP/REST</span>
+                                    <span class="tech-pill">XML UBL 2.1</span>
+                                </div>
+                            </div>
+                            <ul class="tech-list mt-3">
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Comprobantes Soportados:</strong> Emisión de Facturas, Boletas de Venta, Notas de Crédito, Notas de Débito y Guías de Remisión.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Firma Digital y XML:</strong> Generación automatizada de estructuras XML, firmado digital con certificado y compresión ZIP.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Recepción de CDR:</strong> Procesamiento y almacenamiento automático de las Constancias de Recepción (CDR) emitidas por SUNAT.</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="window-mockup">
+                            <div class="window-header">
+                                <div class="window-dot red"></div>
+                                <div class="window-dot cyan"></div>
+                                <div class="window-dot green"></div>
+                                <div class="window-address">localhost/merupos &bull; comprobantes electronicos</div>
+                            </div>
+                            <div class="window-body">
+                                <div class="card-tech mb-2" style="padding: 0.75rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <div style="font-weight: 700; color: #ffffff;">FACTURA ELECTRÓNICA F001-000428</div>
+                                            <div style="font-size: 0.75rem; color: var(--text-muted);">Cliente: INVERSIONES NORTE S.A.C. (RUC 20601234567)</div>
+                                        </div>
+                                        <span class="tech-pill green">ACEPTADO SUNAT</span>
+                                    </div>
+                                </div>
+                                <div class="card-tech mb-2" style="padding: 0.75rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <div style="font-weight: 700; color: #ffffff;">BOLETA ELECTRÓNICA B001-001290</div>
+                                            <div style="font-size: 0.75rem; color: var(--text-muted);">Cliente: Consumidor Final (DNI 45892134)</div>
+                                        </div>
+                                        <span class="tech-pill green">ACEPTADO SUNAT</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span class="tech-pill">Generar XML</span>
+                                    <span class="tech-pill">Descargar PDF A4/Ticket</span>
+                                    <span class="tech-pill primary">Consultar CDR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 6: APLICACIÓN MÓVIL ANDROID -->
+            <section class="slide" data-index="6">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Proyecto 04 &bull; Movilidad y Terreno</div>
+                        <h2 class="slide-title">Aplicación Móvil Android para Punto de Venta</h2>
+                    </div>
+                    <div class="slide-num">06</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-2">
+                        <div>
+                            <div class="card-tech mb-3">
+                                <h3 class="card-title">Extensión Móvil para Venta en Ruta</h3>
+                                <p class="card-text">Aplicación nativa diseñada para permitir a los agentes comerciales emitir ventas, consultar inventarios y registrar cobros directamente desde dispositivos Android.</p>
+                                <div class="tech-pill-group">
+                                    <span class="tech-pill primary">Android Studio</span>
+                                    <span class="tech-pill green">SQLite Local</span>
+                                    <span class="tech-pill cyan">API REST Sincronizada</span>
+                                    <span class="tech-pill">Impresión Bluetooth</span>
+                                </div>
+                            </div>
+                            <ul class="tech-list mt-3">
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Comunicación Bidireccional:</strong> Sincronización transparente de catálogo de productos, clientes y stock con el backend web.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Operación Offline / Online:</strong> Capacidad de registrar operaciones en ruta y sincronizar automáticamente al detectar conexión.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Impresión Térmica:</strong> Conexión directa mediante Bluetooth con impresoras portátiles para entrega inmediata del ticket al cliente.</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            <div style="width: 280px; background-color: var(--bg-deep); border: 2px solid var(--border-strong); padding: 1rem; position: relative;">
+                                <div style="width: 50px; height: 3px; background-color: var(--border-strong); margin: 0 auto 0.75rem auto;"></div>
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 0.75rem;">PIRULUG POS MÓVIL</div>
+                                <div class="card-tech mb-2" style="padding: 0.65rem;">
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Total Venta Actual</div>
+                                    <div style="font-size: 1.4rem; font-weight: 900; color: #ffffff;">S/ 185.50</div>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Ítems en carrito (3 productos)</div>
+                                <div style="display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem;">
+                                    <div style="background-color: var(--bg-card); padding: 0.4rem; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                                        <span>Item 01</span> <strong>S/ 45.00</strong>
+                                    </div>
+                                    <div style="background-color: var(--bg-card); padding: 0.4rem; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                                        <span>Item 02</span> <strong>S/ 90.50</strong>
+                                    </div>
+                                    <div style="background-color: var(--bg-card); padding: 0.4rem; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                                        <span>Item 03</span> <strong>S/ 50.00</strong>
+                                    </div>
+                                </div>
+                                <div style="background-color: var(--primary); color: #ffffff; text-align: center; font-size: 0.75rem; font-weight: 700; padding: 0.5rem;">EMITIR TICKET ELECTRÓNICO</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 7: MI EMPRESA – PIRULUG S.A.C. -->
+            <section class="slide" data-index="7">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Iniciativa Empresarial</div>
+                        <h2 class="slide-title">PIRULUG S.A.C.: Soluciones Digitales e Innovación</h2>
+                    </div>
+                    <div class="slide-num">07</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-2 mb-4">
+                        <div>
+                            <div style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 0.75rem;">
+                                De la formación académica a la personería jurídica tecnológica
+                            </div>
+                            <p class="card-text mb-3">
+                                <strong>PIRULUG S.A.C.</strong> nace como una respuesta formal a la necesidad de pequeñas y medianas empresas de modernizar sus procesos mediante software a medida, facturación electrónica y plataformas web de alta disponibilidad.
+                            </p>
+                            <p class="card-text">
+                                Representa la consolidación práctica de los conocimientos en Computación e Informática, aplicando estándares profesionales de ingeniería de software y gestión de proyectos.
+                            </p>
+                        </div>
+                        <div class="card-tech highlight">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <div style="width: 12px; height: 12px; background-color: var(--primary);"></div>
+                                <h3 class="card-title" style="margin-bottom: 0;">Propósito Corporativo</h3>
+                            </div>
+                            <p class="card-text" style="font-size: 0.95rem; font-style: italic;">
+                                "Empoderar a empresas e instituciones mediante soluciones tecnológicas robustas, accesibles, escalables y orientadas a la transformación digital sostenible."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid-4">
+                        <div class="card-tech">
+                            <div class="card-icon">&lt;/&gt;</div>
+                            <h4 class="card-title" style="font-size: 0.95rem;">Desarrollo de Software</h4>
+                            <p class="card-text" style="font-size: 0.8rem;">Sistemas de gestión empresarial (ERP), puntos de venta (POS) y plataformas en la nube.</p>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">&#9670;</div>
+                            <h4 class="card-title" style="font-size: 0.95rem;">Diseño y Desarrollo Web</h4>
+                            <p class="card-text" style="font-size: 0.8rem;">Sitios corporativos, comercio electrónico y portales interactivos orientados a conversión.</p>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">&#9881;</div>
+                            <h4 class="card-title" style="font-size: 0.95rem;">Integración Tecnológica</h4>
+                            <p class="card-text" style="font-size: 0.8rem;">Facturación electrónica SUNAT, pasarelas de pago y sincronización de bases de datos.</p>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">&#9733;</div>
+                            <h4 class="card-title" style="font-size: 0.95rem;">Transformación Digital</h4>
+                            <p class="card-text" style="font-size: 0.8rem;">Automatización de procesos operativos, auditoría y consultoría informática especializada.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 8: MI SITIO WEB – PIRULUG.COM -->
+            <section class="slide" data-index="8">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Presencia Digital Oficial</div>
+                        <h2 class="slide-title">PIRULUG.COM: Identidad de Marca y Plataforma Web</h2>
+                    </div>
+                    <div class="slide-num">08</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-2">
+                        <div>
+                            <div class="card-tech mb-3">
+                                <h3 class="card-title">Canal Corporativo en Internet</h3>
+                                <p class="card-text">El portal oficial <strong>https://pirulug.com</strong> centraliza la oferta tecnológica, catálogo de servicios y casos de éxito de la empresa.</p>
+                                <div class="tech-pill-group">
+                                    <span class="tech-pill primary">https://pirulug.com</span>
+                                    <span class="tech-pill green">SSL / HTTPS Activo</span>
+                                    <span class="tech-pill">Hosting Corporativo</span>
+                                </div>
+                            </div>
+                            <ul class="tech-list mt-3">
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Identidad Visual Coherente:</strong> Representación gráfica de PIRULUG S.A.C., proyectando profesionalismo y vanguardia tecnológica.</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Catálogo de Soluciones:</strong> Muestra directa de los sistemas desarrollados (facturación, videojuegos, apps móviles).</div>
+                                </li>
+                                <li class="tech-list-item">
+                                    <span class="tech-dot"></span>
+                                    <div><strong>Canal de Contacto y Validación:</strong> Presencia verificable que genera confianza en clientes corporativos y alianzas comerciales.</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="window-mockup">
+                            <div class="window-header">
+                                <div class="window-dot red"></div>
+                                <div class="window-dot cyan"></div>
+                                <div class="window-dot green"></div>
+                                <div class="window-address">https://pirulug.com</div>
+                            </div>
+                            <div class="window-body" style="background: radial-gradient(circle at top right, rgba(255, 0, 85, 0.15) 0%, rgba(6, 9, 17, 0.95) 70%);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                                    <div style="font-weight: 800; font-size: 1.1rem; color: #ffffff;">PIRULUG<span>.COM</span></div>
+                                    <div style="display: flex; gap: 0.75rem; font-size: 0.75rem; color: var(--text-muted);">
+                                        <span>Servicios</span>
+                                        <span>Proyectos</span>
+                                        <span>Nosotros</span>
+                                        <span style="color: var(--primary);">Contacto</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; padding: 1.5rem 0;">
+                                    <div style="font-size: 1.5rem; font-weight: 900; color: #ffffff; line-height: 1.2; margin-bottom: 0.5rem;">
+                                        Soluciones Digitales que Impulsan tu Negocio
+                                    </div>
+                                    <p style="font-size: 0.8rem; color: var(--text-secondary); max-width: 380px; margin: 0 auto 1rem auto;">
+                                        Software a medida, facturación electrónica SUNAT y aplicaciones móviles con respaldo técnico integral.
+                                    </p>
+                                    <div style="display: inline-block; background-color: var(--primary); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.45rem 1rem;">
+                                        EXPLORAR CATÁLOGO DE SERVICIOS
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 9: COMPETENCIAS DESARROLLADAS -->
+            <section class="slide" data-index="9">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Perfil Profesional</div>
+                        <h2 class="slide-title">Competencias de Computación e Informática Aplicadas</h2>
+                    </div>
+                    <div class="slide-num">09</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-3">
+                        <div class="card-tech">
+                            <div class="card-icon">&#9632;</div>
+                            <h3 class="card-title">Desarrollo de Software</h3>
+                            <p class="card-text">Diseño de arquitecturas modulares (MVC), modularidad de código, mantenibilidad y aplicación de buenas prácticas de programación.</p>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">Aplicado en: VS Cultura General y Facturador</div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">&#9632;</div>
+                            <h3 class="card-title">Gestión de Bases de Datos</h3>
+                            <p class="card-text">Diseño relacional de hasta 23 tablas normalizadas, creación de índices, disparadores y soporte transaccional ACID estricto.</p>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">Aplicado en: MySQL 8 y MariaDB</div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">&#9632;</div>
+                            <h3 class="card-title">Programación Móvil</h3>
+                            <p class="card-text">Construcción de interfaces táctiles nativas en Android, persistencia local con SQLite y consumo asíncrono de APIs web.</p>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">Aplicado en: App Móvil de Facturación</div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">&#9632;</div>
+                            <h3 class="card-title">Integración de Sistemas</h3>
+                            <p class="card-text">Conexión con servicios externos SOAP/REST, procesamiento de respuestas XML, firma criptográfica y WebSockets/Polling.</p>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">Aplicado en: Servicios SUNAT</div>
+                        </div>
+                        <div class="card-tech">
+                            <div class="card-icon">&#9632;</div>
+                            <h3 class="card-title">Resolución de Problemas</h3>
+                            <p class="card-text">Capacidad analítica para depurar código, optimizar tiempos de respuesta y asegurar la disponibilidad continua de servicios.</p>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">Aplicado en: Todos los proyectos</div>
+                        </div>
+                        <div class="card-tech highlight">
+                            <div class="card-icon">&#9632;</div>
+                            <h3 class="card-title">Emprendimiento y Gestión</h3>
+                            <p class="card-text">Capacidad de transformar competencias técnicas en valor comercial real mediante la constitución formal de PIRULUG S.A.C.</p>
+                            <div style="font-size: 0.75rem; color: var(--primary); margin-top: 0.75rem; font-weight: 700;">Hito: PIRULUG S.A.C. y pirulug.com</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAPOSITIVA 10: CONCLUSIÓN -->
+            <section class="slide" data-index="10">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-tag">Cierre de la Exposición</div>
+                        <h2 class="slide-title">Conclusiones y Proyección Profesional</h2>
+                    </div>
+                    <div class="slide-num">10</div>
+                </div>
+                <div class="slide-body">
+                    <div class="grid-2" style="margin-bottom: 2rem;">
+                        <div class="card-tech">
+                            <h3 class="card-title">Formación Académica con Impacto Real</h3>
+                            <p class="card-text mb-3">
+                                Los conocimientos adquiridos en la carrera de Computación e Informática del IESTP Santiago Antúnez de Mayolo proporcionaron los cimientos técnicos para desarrollar soluciones completas, desde videojuegos interactivos hasta software tributario de misión crítica.
+                            </p>
+                            <p class="card-text">
+                                Cada proyecto desarrollado superó la etapa experimental para convertirse en una aplicación funcional conectada a bases de datos y respaldada por arquitectura formal.
+                            </p>
+                        </div>
+                        <div class="card-tech">
+                            <h3 class="card-title">Consolidación Empresarial Sostenible</h3>
+                            <p class="card-text mb-3">
+                                La creación de PIRULUG S.A.C. y el lanzamiento del portal pirulug.com demuestran que la informática no solo resuelve requerimientos técnicos, sino que genera unidades de negocio productivas y genera empleo en el sector tecnológico.
+                            </p>
+                            <p class="card-text">
+                                La visión a futuro contempla seguir expandiendo las soluciones empresariales y plataformas en la nube a nivel nacional.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Frase Final Destacada -->
+                    <div style="background-color: var(--bg-deep); border: 1px solid var(--primary-border); padding: 1.75rem 2.5rem; text-align: center; position: relative;">
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem;">
+                            Mensaje de Cierre
+                        </div>
+                        <div style="font-size: 1.65rem; font-weight: 900; color: #ffffff; letter-spacing: -0.02em;">
+                            "De aprender a programar a crear soluciones tecnológicas y construir mi propia empresa."
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">
+                            PIRULUG S.A.C. &bull; IESTP Santiago Antúnez de Mayolo &bull; Computación e Informática
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Barra de Progreso Superior/Inferior -->
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Barra de Controles Inferior -->
+    <footer class="controls-bar">
+        <div class="ctrl-left">
+            <div class="brand-badge">
+                <span>PIRULUG</span> &bull; Computación e Informática
+            </div>
+            <div class="timer-display" title="Tiempo de exposición recomendado: 8 a 10 minutos">
+                Tiempo: <strong id="timerText">00:00</strong> / 10:00 min
+            </div>
+        </div>
+
+        <div class="ctrl-center">
+            <button class="btn-nav" id="btnPrev" onclick="navigateSlide(-1)" title="Diapositiva anterior (Flecha Izquierda)">
+                &larr; Anterior
+            </button>
+            <div class="slide-counter">
+                <span id="currentSlideDisplay">01</span> / 10
+            </div>
+            <button class="btn-nav" id="btnNext" onclick="navigateSlide(1)" title="Siguiente diapositiva (Flecha Derecha o Espacio)">
+                Siguiente &rarr;
+            </button>
+        </div>
+
+        <div class="ctrl-right">
+            <button class="btn-icon" id="btnOverview" onclick="toggleDrawer()" title="Índice de Diapositivas">
+                &#9776;
+            </button>
+            <button class="btn-icon" id="btnFullscreen" onclick="toggleFullscreen()" title="Pantalla Completa (F)">
+                &#9974;
+            </button>
+            <button class="btn-icon" id="btnResetTimer" onclick="resetTimer()" title="Reiniciar Cronómetro">
+                &#8635;
+            </button>
+        </div>
+    </footer>
+
+    <!-- Cajon Modal de Navegacion Rapida / Indice -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawerOnOutside(event)">
+        <div class="drawer-modal">
+            <div class="drawer-header">
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #ffffff;">Índice de la Presentación (10 Diapositivas)</h3>
+                <button class="btn-icon" onclick="toggleDrawer()">&times;</button>
+            </div>
+            <div class="drawer-grid">
+                <div class="drawer-item" onclick="goToSlide(1)">
+                    <div class="drawer-item-num">01</div>
+                    <div class="drawer-item-title">Portada &bull; Mis proyectos de Computación e Informática</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(2)">
+                    <div class="drawer-item-num">02</div>
+                    <div class="drawer-item-title">Introducción &bull; Áreas de Conocimiento y Experiencia</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(3)">
+                    <div class="drawer-item-num">03</div>
+                    <div class="drawer-item-title">Cookie Clicker &bull; Videojuego Web Incremental</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(4)">
+                    <div class="drawer-item-num">04</div>
+                    <div class="drawer-item-title">VS Cultura General &bull; Plataforma Multijugador Real-Time</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(5)">
+                    <div class="drawer-item-num">05</div>
+                    <div class="drawer-item-title">Facturador Electrónico SUNAT &bull; Sistema Empresarial</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(6)">
+                    <div class="drawer-item-num">06</div>
+                    <div class="drawer-item-title">Aplicación Móvil Android &bull; Extensión de Terreno POS</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(7)">
+                    <div class="drawer-item-num">07</div>
+                    <div class="drawer-item-title">Mi Empresa &bull; PIRULUG S.A.C. y Soluciones Digitales</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(8)">
+                    <div class="drawer-item-num">08</div>
+                    <div class="drawer-item-title">Mi Sitio Web &bull; pirulug.com y Presencia Digital</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(9)">
+                    <div class="drawer-item-num">09</div>
+                    <div class="drawer-item-title">Competencias Desarrolladas &bull; Perfil Profesional</div>
+                </div>
+                <div class="drawer-item" onclick="goToSlide(10)">
+                    <div class="drawer-item-num">10</div>
+                    <div class="drawer-item-title">Conclusión &bull; De Aprender a Crear Empresa</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Vanilla de Control de Presentacion -->
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+        let timerSeconds = 0;
+        let timerInterval = null;
+
+        const slides = document.querySelectorAll(".slide");
+        const progressBar = document.getElementById("progressBar");
+        const currentSlideDisplay = document.getElementById("currentSlideDisplay");
+        const btnPrev = document.getElementById("btnPrev");
+        const btnNext = document.getElementById("btnNext");
+        const timerText = document.getElementById("timerText");
+        const drawerOverlay = document.getElementById("drawerOverlay");
+
+        // Inicializar presentacion
+        function updatePresentation() {
+            slides.forEach((slide) => {
+                const index = parseInt(slide.getAttribute("data-index"), 10);
+                slide.classList.toggle("active", index === currentSlide);
+            });
+
+            // Actualizar contador y barra
+            currentSlideDisplay.textContent = String(currentSlide).padStart(2, "0");
+            progressBar.style.width = ((currentSlide / totalSlides) * 100) + "%";
+
+            // Botones habilitados/deshabilitados
+            btnPrev.disabled = (currentSlide === 1);
+            btnNext.disabled = (currentSlide === totalSlides);
+        }
+
+        function navigateSlide(direction) {
+            const target = currentSlide + direction;
+            if (target >= 1 && target <= totalSlides) {
+                currentSlide = target;
+                updatePresentation();
+            }
+        }
+
+        function goToSlide(slideNum) {
+            if (slideNum >= 1 && slideNum <= totalSlides) {
+                currentSlide = slideNum;
+                updatePresentation();
+                if (drawerOverlay.classList.contains("active")) {
+                    toggleDrawer();
+                }
+            }
+        }
+
+        // Navegacion por Teclado
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+                e.preventDefault();
+                navigateSlide(1);
+            } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+                e.preventDefault();
+                navigateSlide(-1);
+            } else if (e.key === "Home") {
+                e.preventDefault();
+                goToSlide(1);
+            } else if (e.key === "End") {
+                e.preventDefault();
+                goToSlide(totalSlides);
+            } else if (e.key === "f" || e.key === "F") {
+                e.preventDefault();
+                toggleFullscreen();
+            } else if (e.key === "Escape") {
+                if (drawerOverlay.classList.contains("active")) {
+                    toggleDrawer();
+                }
+            }
+        });
+
+        // Cronometro de exposicion (8 a 10 minutos objetivo)
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                const mins = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+                const secs = String(timerSeconds % 60).padStart(2, "0");
+                timerText.textContent = mins + ":" + secs;
+
+                // Alerta visual sutil si pasa de 10 minutos
+                if (timerSeconds > 600) {
+                    timerText.style.color = "var(--primary)";
+                } else if (timerSeconds >= 480) {
+                    timerText.style.color = "var(--accent-cyan)";
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            timerSeconds = 0;
+            timerText.textContent = "00:00";
+            timerText.style.color = "var(--primary)";
+        }
+
+        // Pantalla completa
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.log("No se pudo activar pantalla completa: ", err.message);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Cajon Indice
+        function toggleDrawer() {
+            drawerOverlay.classList.toggle("active");
+        }
+
+        function closeDrawerOnOutside(e) {
+            if (e.target === drawerOverlay) {
+                toggleDrawer();
+            }
+        }
+
+        // Iniciar al cargar
+        updatePresentation();
+        startTimer();
+    </script>
+</body>
+</html>
+
