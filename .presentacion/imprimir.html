@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecosistema de Proyectos Tecnológicos - Guido Euclides Laime Espejo | PIRULUG S.A.C.</title>
+    <title>Hojas de Impresión A4 - Guido Euclides Laime Espejo | PIRULUG S.A.C.</title>
+    <style>
+        :root {
+            --primary: #ff0055;
+            --primary-dark: #d60047;
+            --primary-light: rgba(255, 0, 85, 0.08);
+            --primary-border: rgba(255, 0, 85, 0.35);
+
+            --text-dark: #0f172a;
+            --text-secondary: #475569;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+
+            --border-light: #e2e8f0;
+            --border-strong: #cbd5e1;
+            --bg-card: #ffffff;
+            --bg-neutral: #f8fafc;
+        }
+
+        /* Regla estricta: border-radius maximo 2px */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            border-radius: 2px !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #0b0f19;
+            color: var(--text-dark);
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        /* Barra de navegacion en pantalla (no se imprime) */
+        /* Barra de navegacion superior en pantalla */
+        .screen-toolbar {
+            width: 100%;
+            max-width: 210mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 0.75rem 1.25rem;
+            padding: 0.85rem 1.25rem;
+            color: #ffffff;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .screen-toolbar-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .screen-toolbar-title span {
+            color: var(--primary);
+        }
+
+        .screen-toolbar-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            padding: 0.55rem 1.15rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-action.btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .btn-action.btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-action.btn-secondary {
+            background-color: #1f2937;
+            color: #e5e7eb;
+            border-color: #374151;
+        }
+
+        .btn-action.btn-secondary:hover {
+            background-color: #374151;
+            color: #ffffff;
+        }
+
+        /* Contenedor Hoja A4 */
+        /* Contenedor de las hojas A4 */
+        .pages-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Hoja A4 Individual (210mm x 297mm) */
+        .page-a4 {
+            width: 210mm;
+            min-height: 297mm;
+            height: 297mm;
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            padding: 12mm 15mm;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+            padding: 14mm 16mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+            break-after: page;
+        }
+
+        /* Franja de acento superior */
+        .page-a4:last-child {
+            page-break-after: auto;
+            break-after: auto;
+        }
+
+        /* Franja superior decorativa */
+        .page-a4::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary) 0%, #00e5ff 100%);
+        }
+
+        /* Encabezado A4 */
+        /* Encabezado Formal */
+        .print-header {
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 0.85rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-logo-row {
+        .header-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+            gap: 0.65rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-logo-badge {
+        .header-badge {
+            background-color: var(--primary);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 900;
+            padding: 0.15rem 0.45rem;
+            font-weight: 800;
+            padding: 0.18rem 0.55rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .header-company-name {
+            font-size: 1.35rem;
+            font-size: 1.45rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+        }
+
+        .header-company-name span {
+            color: var(--primary);
+        }
+
+        .header-author-name {
+            font-size: 1.05rem;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-top: 0.15rem;
+        }
+
+        .header-institution {
+            font-size: 0.82rem;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 0.1rem;
+            margin-top: 0.15rem;
+        }
+
+        .header-context {
+            text-align: right;
+            max-width: 250px;
+            max-width: 240px;
+        }
+
+        .header-context-title {
+        .header-context-tag {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .header-context-desc {
+            font-size: 0.76rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* Banner de Instrucciones */
+        .scan-instruction-banner {
+            background-color: var(--primary-light);
+            border: 1px dashed var(--primary-border);
+            padding: 0.55rem 0.85rem;
+            margin-bottom: 1.15rem;
+        /* Cuerpo Central Destacado */
+        .main-qr-showcase {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .scan-instruction-text {
+            font-size: 0.8rem;
+            font-weight: 700;
+        .showcase-tag {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+            background-color: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            padding: 0.25rem 0.85rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .showcase-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.35rem;
+            line-height: 1.2;
+        }
+
+        .scan-instruction-sub {
+            font-size: 0.75rem;
+        .showcase-subtitle {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+        }
+
+        /* Lista de Tarjetas QR en Formato A4 */
+        .qr-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .qr-print-card {
+            border: 1px solid var(--border-strong);
+            background-color: var(--bg-card);
+            padding: 1rem 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 1.35rem;
+            position: relative;
+            page-break-inside: avoid;
+        }
+
+        .qr-print-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--border-strong);
+        }
+
+        .qr-print-card.featured::before {
+            background-color: var(--primary);
+        }
+
+        /* Marco del Codigo QR */
+        .qr-print-frame {
+        /* Marco Gigante para el Codigo QR */
+        .large-qr-frame {
+            background-color: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            border: 2px solid var(--primary);
+            padding: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .qr-print-frame img {
+            width: 140px;
+            height: 140px;
+        .large-qr-frame img {
+            width: 250px;
+            height: 250px;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        /* Informacion del Proyecto */
+        .qr-print-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        /* Enlace Web Visible y Grande */
+        .showcase-url-box {
+            background-color: var(--bg-neutral);
+            border: 1px solid var(--border-strong);
+            padding: 0.65rem 1.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .qr-print-tag {
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 0.68rem;
+        .showcase-url {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            background-color: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            padding: 0.15rem 0.45rem;
+            margin-bottom: 0.35rem;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .qr-print-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.01em;
+        .showcase-instruction {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .qr-print-url {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.45rem;
+            text-decoration: none;
+            display: block;
+        /* Ficha Informativa y Tecnologias */
+        .showcase-info-card {
+            background-color: var(--bg-neutral);
+            border: 1px solid var(--border-light);
+            padding: 0.95rem 1.5rem;
+            max-width: 620px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .qr-print-desc {
+            font-size: 0.8rem;
+        .showcase-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .qr-print-specs {
+        .showcase-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            gap: 0.45rem;
+        }
+
+        .spec-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+        .spec-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #334155;
+            background-color: var(--bg-neutral);
+            border: 1px solid var(--border-light);
+            padding: 0.15rem 0.45rem;
+            background-color: #ffffff;
+            border: 1px solid var(--border-strong);
+            padding: 0.2rem 0.55rem;
+            text-transform: uppercase;
+        }
+
+        .spec-badge.accent {
+        .spec-pill.accent {
+            color: var(--primary-dark);
+            border-color: var(--primary-border);
+            background-color: var(--primary-light);
+            font-weight: 700;
+        }
+
+        /* Pie de Pagina A4 */
+        .print-footer {
+            border-top: 1px solid var(--border-light);
+            padding-top: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            gap: 0.15rem;
+        }
+
+        .footer-left strong {
+            color: #0f172a;
+        }
+
+        .footer-right {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .footer-right .company-mark {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        /* Reglas Especificas de Impresion */
+        /* Reglas Estrictas de Impresion para Navegadores */
+        @media print {
+            body {
+                background: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .screen-toolbar {
+                display: none !important;
+            }
+
+            .pages-container {
+                display: block !important;
+                gap: 0 !important;
+            }
+
+            .page-a4 {
+                width: 100% !important;
+                min-height: 100% !important;
+                height: 100% !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                box-shadow: none !important;
+                padding: 8mm 10mm !important;
+                padding: 12mm 15mm !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+            }
+
+            .page-a4:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 6mm 8mm;
+                margin: 0;
+            }
+
+            .qr-print-card {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra Superior de Navegacion en Pantalla -->
+    <header class="screen-toolbar">
+        <div class="screen-toolbar-title">
+            <span>PIRULUG S.A.C.</span> &bull; Hoja de Impresión A4
+            <span>PIRULUG S.A.C.</span> &bull; Hojas de Impresión A4 (1 QR por Página)
+        </div>
+        <div class="screen-toolbar-actions">
+            <a href="index.html" class="btn-action btn-secondary" title="Regresar a la presentación de diapositivas">
+                &larr; Volver a la Presentación
+            </a>
+            <button onclick="window.print()" class="btn-action btn-primary" title="Imprimir o guardar en PDF">
+                Imprimir Hoja A4
+            <button onclick="window.print()" class="btn-action btn-primary" title="Imprimir las 3 hojas o guardar en PDF">
+                Imprimir Hojas A4 (3 Páginas)
+            </button>
+        </div>
+    </header>
+
+    <!-- Documento Formato A4 -->
+    <main class="page-a4">
+    <!-- Contenedor de las 3 Hojas A4 -->
+    <div class="pages-container">
+
+        <div>
+            <!-- Encabezado Institucional y Comercial -->
+        <!-- ==========================================
+             PÁGINA 1: COOKIE CLICKER (VIDEOJUEGO WEB)
+             ========================================== -->
+        <main class="page-a4">
+            <!-- Encabezado -->
+            <header class="print-header">
+                <div class="header-brand">
+                    <div class="header-logo-row">
+                        <span class="header-logo-badge">PORTAFOLIO EN VIVO</span>
+                    <div class="header-badge-row">
+                        <span class="header-badge">PROYECTO 01 &bull; VIDEOJUEGOS WEB</span>
+                        <div class="header-company-name">PIRULUG <span>S.A.C.</span></div>
+                    </div>
+                    <div class="header-author-name">Guido Euclides Laime Espejo</div>
+                    <div class="header-institution">
+                        IESTP Santiago Antúnez de Mayolo &bull; Computación e Informática
+                    </div>
+                </div>
+
+                <div class="header-context">
+                    <div class="header-context-title">Demostraciones en Línea</div>
+                    <div class="header-context-tag">Demostración en Línea</div>
+                    <div class="header-context-desc">
+                        Proyectos reales de desarrollo de software, videojuegos web y plataformas tecnológicas en producción.
+                        Videojuego web incremental interactivo con persistencia de partidas en base de datos.
+                    </div>
+                </div>
+            </header>
+
+            <!-- Banner de Instruccion para el Escaneo -->
+            <section class="scan-instruction-banner">
+                <div class="scan-instruction-text">
+                    Acceso Instantáneo desde Dispositivos Móviles
+            <!-- Contenido Central QR Gigante -->
+            <section class="main-qr-showcase">
+                <span class="showcase-tag">Videojuego Web Incremental</span>
+                <h1 class="showcase-title">Cookie Clicker</h1>
+                <p class="showcase-subtitle">
+                    Generación exponencial de puntos, automatización de mejoras y guardado en tiempo real.
+                </p>
+
+                <!-- Marco QR 250px -->
+                <div class="large-qr-frame">
+                    <img src="qr-cookie.pirulug.com.png" alt="Código QR Cookie Clicker">
+                </div>
+                <div class="scan-instruction-sub">
+                    Apunta la cámara de tu celular hacia cualquier código QR para abrir el proyecto en tiempo real.
+
+                <!-- Enlace Web -->
+                <div class="showcase-url-box">
+                    <a href="https://cookie.pirulug.com/" target="_blank" class="showcase-url">
+                        https://cookie.pirulug.com/
+                    </a>
+                </div>
+
+                <div class="showcase-instruction">
+                    Apunta la cámara de tu celular hacia el código QR para jugar en tiempo real
+                </div>
+
+                <!-- Ficha Informativa -->
+                <div class="showcase-info-card">
+                    <p class="showcase-desc">
+                        Desarrollado con arquitectura web clásica sin frameworks pesados, optimizado para alto rendimiento en navegador. Permite a los usuarios acumular galletas, desbloquear multiplicadores y conservar su progreso en MySQL.
+                    </p>
+                    <div class="showcase-specs">
+                        <span class="spec-pill accent">PHP Backend</span>
+                        <span class="spec-pill">MySQL 8</span>
+                        <span class="spec-pill">JavaScript Vanilla</span>
+                        <span class="spec-pill">HTML5 / CSS3</span>
+                        <span class="spec-pill">Loop de Juego Asíncrono</span>
+                        <span class="spec-pill accent">Persistencia Total</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contenedor de las 3 Tarjetas QR -->
+            <section class="qr-cards-container">
+            <!-- Pie de Pagina -->
+            <footer class="print-footer">
+                <div class="footer-left">
+                    <div>Estudiante / Desarrollador: <strong>Guido Euclides Laime Espejo</strong></div>
+                    <div>Carrera Profesional de Computación e Informática &bull; IESTP Santiago Antúnez de Mayolo</div>
+                </div>
+                <div class="footer-right">
+                    <span class="company-mark">PIRULUG S.A.C.</span> &bull; Página 1 de 3
+                </div>
+            </footer>
+        </main>
+
+                <!-- TARJETA 01: COOKIE CLICKER -->
+                <article class="qr-print-card featured">
+                    <div class="qr-print-frame">
+                        <img src="qr-cookie.pirulug.com.png" alt="QR Cookie Clicker">
+        <!-- ==========================================
+             PÁGINA 2: VS CULTURA GENERAL (MULTIJUGADOR)
+             ========================================== -->
+        <main class="page-a4">
+            <!-- Encabezado -->
+            <header class="print-header">
+                <div class="header-brand">
+                    <div class="header-badge-row">
+                        <span class="header-badge">PROYECTO 02 &bull; SISTEMAS EN TIEMPO REAL</span>
+                        <div class="header-company-name">PIRULUG <span>S.A.C.</span></div>
+                    </div>
+                    <div class="qr-print-info">
+                        <span class="qr-print-tag">Videojuego Web Incremental</span>
+                        <h2 class="qr-print-title">Cookie Clicker: Juego Incremental y Persistente</h2>
+                        <a href="https://cookie.pirulug.com/" target="_blank" class="qr-print-url">
+                            https://cookie.pirulug.com/
+                        </a>
+                        <p class="qr-print-desc">
+                            Videojuego web interactivo desarrollado con arquitectura clásica y optimizada. Mecánicas incrementales de clics, cálculo matemático de producción por segundo y persistencia de partidas en base de datos.
+                        </p>
+                        <div class="qr-print-specs">
+                            <span class="spec-badge accent">PHP Backend</span>
+                            <span class="spec-badge">MySQL</span>
+                            <span class="spec-badge">JavaScript ES6</span>
+                            <span class="spec-badge">HTML5 / CSS3</span>
+                            <span class="spec-badge">Partidas Guardadas</span>
+                        </div>
+                    <div class="header-author-name">Guido Euclides Laime Espejo</div>
+                    <div class="header-institution">
+                        IESTP Santiago Antúnez de Mayolo &bull; Computación e Informática
+                    </div>
+                </article>
+                </div>
+
+                <!-- TARJETA 02: VS CULTURA GENERAL -->
+                <article class="qr-print-card featured">
+                    <div class="qr-print-frame">
+                        <img src="qr-cultura.pirulug.com.png" alt="QR VS Cultura General">
+                <div class="header-context">
+                    <div class="header-context-tag">Demostración en Línea</div>
+                    <div class="header-context-desc">
+                        Plataforma web multijugador competitiva con emparejamiento y sincronización de partidas.
+                    </div>
+                    <div class="qr-print-info">
+                        <span class="qr-print-tag">Plataforma Multijugador Real-Time</span>
+                        <h2 class="qr-print-title">VS Cultura General: Arena Competitiva del Perú</h2>
+                        <a href="https://cultura.pirulug.com/" target="_blank" class="qr-print-url">
+                            https://cultura.pirulug.com/
+                        </a>
+                        <p class="qr-print-desc">
+                            Plataforma multijugador sincronizada con duelos 1 vs 1, modalidad por equipos 2 vs 2 y salas privadas personalizadas. Banco de preguntas de 18 categorías peruanas y sistema competitivo ELO.
+                        </p>
+                        <div class="qr-print-specs">
+                            <span class="spec-badge accent">PHP 8.5 Modular (MVC)</span>
+                            <span class="spec-badge">MySQL 8 Normalizado</span>
+                            <span class="spec-badge">Fetch API & Polling</span>
+                            <span class="spec-badge">Sistema ELO</span>
+                            <span class="spec-badge">Salas Privadas</span>
+                        </div>
+                </div>
+            </header>
+
+            <!-- Contenido Central QR Gigante -->
+            <section class="main-qr-showcase">
+                <span class="showcase-tag">Plataforma Multijugador Real-Time</span>
+                <h1 class="showcase-title">VS Cultura General</h1>
+                <p class="showcase-subtitle">
+                    Arena de preguntas y respuestas sobre cultura peruana, duelos 1 vs 1 y competencias 2 vs 2.
+                </p>
+
+                <!-- Marco QR 250px -->
+                <div class="large-qr-frame">
+                    <img src="qr-cultura.pirulug.com.png" alt="Código QR VS Cultura General">
+                </div>
+
+                <!-- Enlace Web -->
+                <div class="showcase-url-box">
+                    <a href="https://cultura.pirulug.com/" target="_blank" class="showcase-url">
+                        https://cultura.pirulug.com/
+                    </a>
+                </div>
+
+                <div class="showcase-instruction">
+                    Apunta la cámara de tu celular hacia el código QR para unirte a una partida en vivo
+                </div>
+
+                <!-- Ficha Informativa -->
+                <div class="showcase-info-card">
+                    <p class="showcase-desc">
+                        Plataforma sincronizada donde los jugadores compiten en tiempo real. Cuenta con salas privadas personalizadas mediante código único, temporizador estricto, ranking competitivo ELO y 18 categorías de historia, geografía y patrimonio peruano.
+                    </p>
+                    <div class="showcase-specs">
+                        <span class="spec-pill accent">PHP 8.5 Modular (MVC)</span>
+                        <span class="spec-pill">MySQL 8 Normalizado</span>
+                        <span class="spec-pill">Fetch API & Polling</span>
+                        <span class="spec-pill">Sistema ELO</span>
+                        <span class="spec-pill">18 Categorías del Perú</span>
+                        <span class="spec-pill accent">Salas Privadas</span>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+                <!-- TARJETA 03: PIRULUG S.A.C. -->
+                <article class="qr-print-card featured">
+                    <div class="qr-print-frame">
+                        <img src="qr-pirulug.com.png" alt="QR PIRULUG.COM">
+            <!-- Pie de Pagina -->
+            <footer class="print-footer">
+                <div class="footer-left">
+                    <div>Estudiante / Desarrollador: <strong>Guido Euclides Laime Espejo</strong></div>
+                    <div>Carrera Profesional de Computación e Informática &bull; IESTP Santiago Antúnez de Mayolo</div>
+                </div>
+                <div class="footer-right">
+                    <span class="company-mark">PIRULUG S.A.C.</span> &bull; Página 2 de 3
+                </div>
+            </footer>
+        </main>
+
+        <!-- ==========================================
+             PÁGINA 3: PIRULUG.COM (EMPRESA TECNOLÓGICA)
+             ========================================== -->
+        <main class="page-a4">
+            <!-- Encabezado -->
+            <header class="print-header">
+                <div class="header-brand">
+                    <div class="header-badge-row">
+                        <span class="header-badge">INICIATIVA EMPRESARIAL &bull; PRESENCIA DIGITAL</span>
+                        <div class="header-company-name">PIRULUG <span>S.A.C.</span></div>
+                    </div>
+                    <div class="qr-print-info">
+                        <span class="qr-print-tag">Empresa & Portal Digital Oficial</span>
+                        <h2 class="qr-print-title">PIRULUG S.A.C.: Soluciones Digitales e Innovación</h2>
+                        <a href="https://pirulug.com/" target="_blank" class="qr-print-url">
+                            https://pirulug.com/
+                        </a>
+                        <p class="qr-print-desc">
+                            Portal oficial y presencia digital de la empresa tecnológica PIRULUG S.A.C. Servicios de desarrollo de software a medida, facturación electrónica homologada SUNAT, plataformas web y aplicaciones móviles.
+                        </p>
+                        <div class="qr-print-specs">
+                            <span class="spec-badge accent">PIRULUG S.A.C.</span>
+                            <span class="spec-badge">Facturación SUNAT</span>
+                            <span class="spec-badge">Apps Móviles Android</span>
+                            <span class="spec-badge">Hosting Seguro SSL</span>
+                            <span class="spec-badge">Sistemas a Medida</span>
+                        </div>
+                    <div class="header-author-name">Guido Euclides Laime Espejo</div>
+                    <div class="header-institution">
+                        IESTP Santiago Antúnez de Mayolo &bull; Computación e Informática
+                    </div>
+                </article>
+                </div>
+
+                <div class="header-context">
+                    <div class="header-context-tag">Sitio Web Oficial</div>
+                    <div class="header-context-desc">
+                        Portal corporativo institucional, catálogo de soluciones de software y canal de atención.
+                    </div>
+                </div>
+            </header>
+
+            <!-- Contenido Central QR Gigante -->
+            <section class="main-qr-showcase">
+                <span class="showcase-tag">Empresa Tecnológica Formal</span>
+                <h1 class="showcase-title">PIRULUG S.A.C.</h1>
+                <p class="showcase-subtitle">
+                    Soluciones digitales integrales, software a medida, facturación electrónica SUNAT y apps móviles.
+                </p>
+
+                <!-- Marco QR 250px -->
+                <div class="large-qr-frame">
+                    <img src="qr-pirulug.com.png" alt="Código QR PIRULUG.COM">
+                </div>
+
+                <!-- Enlace Web -->
+                <div class="showcase-url-box">
+                    <a href="https://pirulug.com/" target="_blank" class="showcase-url">
+                        https://pirulug.com/
+                    </a>
+                </div>
+
+                <div class="showcase-instruction">
+                    Apunta la cámara de tu celular hacia el código QR para ingresar al sitio web oficial
+                </div>
+
+                <!-- Ficha Informativa -->
+                <div class="showcase-info-card">
+                    <p class="showcase-desc">
+                        Canal corporativo oficial de PIRULUG S.A.C. Centraliza los servicios informáticos de la empresa: sistemas de facturación electrónica homologados con SUNAT, desarrollo web corporativo, aplicaciones móviles Android y consultoría tecnológica integral.
+                    </p>
+                    <div class="showcase-specs">
+                        <span class="spec-pill accent">PIRULUG S.A.C.</span>
+                        <span class="spec-pill">Facturación SUNAT</span>
+                        <span class="spec-pill">Apps Android</span>
+                        <span class="spec-pill">Hosting Seguro SSL</span>
+                        <span class="spec-pill">Sistemas a Medida</span>
+                        <span class="spec-pill accent">Empresa Formal</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Pie de Pagina de la Hoja A4 -->
+        <footer class="print-footer">
+            <div class="footer-left">
+                <div>Estudiante / Desarrollador: <strong>Guido Euclides Laime Espejo</strong></div>
+                <div>Carrera Profesional de Computación e Informática &bull; IESTP Santiago Antúnez de Mayolo</div>
+            </div>
+            <div class="footer-right">
+                <span class="company-mark">PIRULUG S.A.C.</span> &bull; Innovación y Tecnología
+            </div>
+        </footer>
+            <!-- Pie de Pagina -->
+            <footer class="print-footer">
+                <div class="footer-left">
+                    <div>Estudiante / Fundador: <strong>Guido Euclides Laime Espejo</strong></div>
+                    <div>Carrera Profesional de Computación e Informática &bull; IESTP Santiago Antúnez de Mayolo</div>
+                </div>
+                <div class="footer-right">
+                    <span class="company-mark">PIRULUG S.A.C.</span> &bull; Página 3 de 3
+                </div>
+            </footer>
+        </main>
+
+    </main>
+    </div>
+
+</body>
+</html>
+
